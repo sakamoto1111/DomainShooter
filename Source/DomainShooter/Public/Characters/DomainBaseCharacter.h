@@ -6,6 +6,11 @@
 #include "GameFramework/Character.h"
 #include "DomainBaseCharacter.generated.h"
 
+// Forward Declaration
+class UInputMappingContext;
+class UInputAction;
+struct FInputActionValue;
+
 UCLASS()
 class DOMAINSHOOTER_API ADomainBaseCharacter : public ACharacter
 {
@@ -22,6 +27,15 @@ protected:
 
 private:
 
+	/// Input **********************************************
+	UPROPERTY(EditAnywhere, Category = "Input")
+	TObjectPtr<UInputMappingContext> BaseCharacterIMC;
+
+	UPROPERTY(EditAnywhere, Category = "Input")
+	TObjectPtr<UInputAction> IA_MoveForward;
+
+	/// Input Functions *************************************
+	void MoveForward(const FInputActionValue& InputActionValue);
 
 public:	
 	// Setters And Getters
