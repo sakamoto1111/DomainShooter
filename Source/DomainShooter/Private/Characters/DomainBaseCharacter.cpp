@@ -10,6 +10,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 
+
 ADomainBaseCharacter::ADomainBaseCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
@@ -37,8 +38,6 @@ void ADomainBaseCharacter::BeginPlay()
 
 }
 
-
-
 void ADomainBaseCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -51,7 +50,9 @@ void ADomainBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 
 	UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent);
 	EnhancedInputComponent->BindAction(IA_BaseCharacterMovement, ETriggerEvent::Triggered, this, &ADomainBaseCharacter::BaseCharacterMovement);
+	EnhancedInputComponent->BindAction(IA_BaseCharacterLookAround, ETriggerEvent::Triggered, this, &ADomainBaseCharacter::BaseCharacterLookAround);
 }
+
 
 void ADomainBaseCharacter::BaseCharacterMovement(const FInputActionValue& InputActionValue)
 {
@@ -65,6 +66,17 @@ void ADomainBaseCharacter::BaseCharacterMovement(const FInputActionValue& InputA
 
 		AddMovementInput(ForwardDirection, MovementVector.X);
 		AddMovementInput(RightDirection, MovementVector.Y);
+	}
+}
+
+void ADomainBaseCharacter::BaseCharacterLookAround(const FInputActionValue& InputActionValue)
+{
+	FVector2D LookAroundValue = InputActionValue.Get<FVector2D>();
+
+	if (Controller)
+	{
+		AddControllerYawInput(LookAroundValue.X);
+		AddControllerPitchInput(-LookAroundValue.Y);
 	}
 }
 
