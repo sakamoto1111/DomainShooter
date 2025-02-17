@@ -10,6 +10,8 @@
 class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
+class USpringArmComponent;
+class UCameraComponent;
 
 UCLASS()
 class DOMAINSHOOTER_API ADomainBaseCharacter : public ACharacter
@@ -26,6 +28,12 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+	/// Components *****************************************
+	UPROPERTY(VisibleAnywhere, Category = "Camera")
+	TObjectPtr<USpringArmComponent> BaseSpringArm;
+
+	UPROPERTY(VisibleAnywhere, Category = "Camera")
+	TObjectPtr<UCameraComponent> BaseCamera;
 
 	/// Input **********************************************
 	UPROPERTY(EditAnywhere, Category = "Input")
